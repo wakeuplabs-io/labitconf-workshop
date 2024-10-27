@@ -1,0 +1,39 @@
+{
+  "name": "labitconf-workshop",
+  "version": "1.0.0",
+  "description": "Workshop to introduce solidity",
+  "main": "index.js",
+  "scripts": {
+    "abis": "wagmi generate",
+    "test": "npx hardhat test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wakeuplabs-io/labitconf-workshop.git"
+  },
+  "keywords": [
+    "workshop",
+    "web3",
+    "solidity",
+    "blockchain"
+  ],
+  "author": "Juan Dahl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wakeuplabs-io/labitconf-workshop/issues"
+  },
+  "homepage": "https://github.com/wakeuplabs-io/labitconf-workshop#readme",
+  "dependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
+    "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+    "@openzeppelin/contracts": "^5.1.0",
+    "@wagmi/cli": "^2.1.16",
+    "hardhat": "^2.22.15",
+    "mocha": "^10.7.3",
+    "viem": "^2.21.35"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.9",
+    "ts-node": "^10.9.2"
+  }
+}
