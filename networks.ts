@@ -1,8 +1,8 @@
-import * as dotenv from "dotenv";
+import envParsed from "./envParsed";
 
-const TESTNET_PRIVATE_KEY = process.env.TESTNET_PRIVATE_KEY!;
-const MAINNET_PRIVATE_KEY = process.env.MAINNET_PRIVATE_KEY!;
-const API_KEY = process.env.ETHERSCAN_API_KEY!;
+const TESTNET_PRIVATE_KEY = envParsed().TESTNET_PRIVATE_KEY;
+const MAINNET_PRIVATE_KEY = envParsed().MAINNET_PRIVATE_KEY;
+const API_KEY = envParsed().ETHERSCAN_API_KEY;
 
 const sepolia = {
   url: "https://sepolia.drpc.org",
@@ -40,6 +40,9 @@ const networks = {
 export type Networks = keyof typeof networks;
 
 export const getNetwork = (key: Networks, isTestnet: boolean) => {
+  if (!key) {
+    return undefined;
+  }
   const network = networks[key];
   const networkKey = isTestnet ? "testnet" : "mainnet";
   const privateKey = isTestnet ? TESTNET_PRIVATE_KEY : MAINNET_PRIVATE_KEY;
@@ -49,7 +52,6 @@ export const getNetwork = (key: Networks, isTestnet: boolean) => {
     network: networkKey,
     urls: network.urls,
   };
-
   return {
     network: {
       url: network.url,
