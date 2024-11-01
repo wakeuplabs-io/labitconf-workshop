@@ -42,7 +42,10 @@ contract Marketplace is Ownable, IMarketplaceErrors, IMarketplace {
             10 ** ERC20(paymentToken).decimals();
         IERC20(paymentToken).transferFrom(msg.sender, address(this), tokenCost);
 
-        LabitConfToken(labitConfToken).mint(msg.sender, amount);
+        LabitConfToken(labitConfToken).mint(
+            msg.sender,
+            amount * 10 ** labitConfToken.decimals()
+        );
     }
 
     /// @inheritdoc IMarketplace

@@ -52,7 +52,7 @@ describe("Marketplace", function () {
       const balance = await labitConfTokenService.getBalance(
         investorOne.account.address
       );
-      expect(balance).to.be.equal(TOKENS_AMOUNT);
+      expect(balance).to.be.equal(TOKENS_AMOUNT * BigInt(10 ** TOKEN_DECIMALS));
     });
   });
 
