@@ -14,7 +14,7 @@ const sepolia = {
 };
 
 const optimism_sepolia = {
-  url: "https://endpoints.omniatech.io/v1/op/sepolia/public",
+  url: "https://sepolia.optimism.io",
   chainId: 11155420,
   urls: {
     apiURL: "https://api-sepolia-optimism.etherscan.io/api",

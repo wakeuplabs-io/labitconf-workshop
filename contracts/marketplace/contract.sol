@@ -5,19 +5,15 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../labitConfToken/contract.sol";
 import "./errors.sol";
+import "./interface.sol";
 
 /**
  * @title TokenMarketplace
  * @dev A marketplace contract that allows users to purchase LabitConf tokens with a specified payment token.
  */
-contract Marketplace is Ownable, IMarketplaceErrors {
-    /// @dev The LabitConf token contract instance
+contract Marketplace is Ownable, IMarketplaceErrors, IMarketplace {
     LabitConfToken public labitConfToken;
-
-    /// @dev The address of the ERC20 payment token
     address public paymentToken;
-
-    /// @dev The price of the LabitConf token in the payment token
     uint256 public tokenPrice;
 
     /**
@@ -34,37 +30,28 @@ contract Marketplace is Ownable, IMarketplaceErrors {
         tokenPrice = _tokenPrice;
     }
 
-    /**
-     * @dev Allows users to buy LabitConf tokens by sending payment tokens.
-     * @param amount The number of LabitConf tokens to purchase.
-     * @notice Reverts if the user does not have sufficient funds.
-     */
+    /// @inheritdoc IMarketplace
     function buyTokens(uint256 amount) external {
         uint256 tokenBalance = IERC20(paymentToken).balanceOf(msg.sender);
         if (tokenBalance < amount) {
             revert InsuficientFunds(paymentToken, tokenBalance, amount);
         }
 
-        uint256 tokenCost = amount * tokenPrice;
+        uint256 tokenCost = amount *
+            tokenPrice *
+            10 ** ERC20(paymentToken).decimals();
         IERC20(paymentToken).transferFrom(msg.sender, address(this), tokenCost);
 
         LabitConfToken(labitConfToken).mint(msg.sender, amount);
     }
 
-    /**
-     * @dev Allows the owner to withdraw payment tokens from the contract.
-     * @notice Only the owner can call this function.
-     */
+    /// @inheritdoc IMarketplace
     function withdraw() external onlyOwner {
         uint256 balance = IERC20(paymentToken).balanceOf(address(this));
         IERC20(paymentToken).transfer(msg.sender, balance);
     }
 
-    /**
-     * @dev Allows the owner to set a new token price.
-     * @param _tokenPrice The new price of the LabitConf token in the payment token.
-     * @notice Only the owner can call this function.
-     */
+    /// @inheritdoc IMarketplace
     function setTokenPrice(uint256 _tokenPrice) external onlyOwner {
         tokenPrice = _tokenPrice;
     }

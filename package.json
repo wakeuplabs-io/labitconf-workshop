@@ -4,7 +4,10 @@
   "description": "Workshop to introduce solidity",
   "main": "index.js",
   "scripts": {
-    "abis": "wagmi generate",
+    "compile": "npx hardhat compile && npm run abis",
+    "deploy": "npx hardhat ignition deploy ./ignition/modules/all.ts",
+    "deploy:testnet": "npm run deploy -- --network testnet --verify",
+    "deploy:mainnet": "npm run deploy -- --network mainnet --verify",
     "test": "npx hardhat test"
   },
   "repository": {
