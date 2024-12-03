@@ -3,8 +3,9 @@ import "@nomicfoundation/hardhat-toolbox-viem";
 import "@nomicfoundation/hardhat-chai-matchers";
 import "solidity-coverage";
 
-import { getNetwork, Networks } from "./networks";
+import { Networks } from "./networks";
 import envParsed from "./envParsed";
+import { getNetwork } from "./getNetwork";
 
 const NETWORK_TESTNET = envParsed().NETWORK_TESTNET as Networks;
 const NETWORK_MAINNET = envParsed().NETWORK_MAINNET as Networks;
